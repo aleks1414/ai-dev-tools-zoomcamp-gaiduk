@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Add/Edit Task{% endblock %}
+{% block content %}
+<h2>{% if task %}Edit Task{% else %}Add Task{% endif %}</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title" value="{{ task.title|default:'' }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description">{{ task.description|default:'' }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label for="due_date" class="form-label">Due Date</label>
+        <input type="date" class="form-control" id="due_date" name="due_date" value="{% if task and task.due_date %}{{ task.due_date|date:'Y-m-d' }}{% endif %}">
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="{% url 'task_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
