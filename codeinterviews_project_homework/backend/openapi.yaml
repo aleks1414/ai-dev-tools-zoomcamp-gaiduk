@@ -1,0 +1,56 @@
+openapi: 3.1.0
+info:
+  title: Code Interview API
+  version: 1.0.0
+  description: API for real-time code interview sessions.
+servers:
+  - url: http://localhost:3000
+paths:
+  /api/sessions:
+    post:
+      summary: Create a new session
+      responses:
+        '201':
+          description: Session created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sessionId:
+                    type: string
+                    format: uuid
+  /api/sessions/{sessionId}:
+    get:
+      summary: Join an existing session
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Session found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sessionId:
+                    type: string
+                    format: uuid
+        '404':
+          description: Session not found
+  /api/health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: Server is healthy
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: OK
